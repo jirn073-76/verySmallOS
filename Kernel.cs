@@ -5,9 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Sys = Cosmos.System;
-using Cosmos.System.Graphics;
 using System.IO;
-using System.Drawing;
 using Cosmos.System.ScanMaps;
 
 //128, 38
@@ -15,22 +13,20 @@ namespace VerySmallOS
 {
     public class Kernel : Sys.Kernel
     {
-        Canvas canvas;
         Sys.FileSystem.CosmosVFS fileSystem;
 
         string[] supportedCommands = new string[] { "ls, dir, mkdir, cat, exit, startx, help"};
         protected override void BeforeRun()
         {
             Console.Clear();
-            Console.WriteLine("Welcome to verySmallOS\n", Color.Red);
+            Console.WriteLine("Welcome to verySmallOS\n");
             SetKeyboardScanMap(EnvironmentUtils.QueryUserForKeymap());
 
             fileSystem = new Sys.FileSystem.CosmosVFS();
             Sys.FileSystem.VFS.VFSManager.RegisterVFS(fileSystem);
             Console.WriteLine("\n\n\n\n\n\n\n");
 
-            //canvas = FullScreenCanvas.GetFullScreenCanvas();
-            //canvas.Clear(Color.BlanchedAlmond);
+
         }
 
         protected override void Run()
@@ -63,8 +59,17 @@ namespace VerySmallOS
                     case "exit":
                         EnvironmentUtils.Exit();
                         break;
+                    case "startx":
+                        Console.WriteLine("Are you sure you want to change to graphical mode? (Y/N)");
+                        string isSure = Console.ReadLine();
+                        if (isSure.ToUpper() != "Y")
+                            return;
+
+                        GraphicsSubsystemUtil.StartGraphicalMode();
+                        break;
                     default:
-                        Console.WriteLine("Command not recognized");
+                        if (cmd[0] != "")
+                            Console.WriteLine("Command not recognized");
                         break;
                 }
             }
