@@ -76,6 +76,10 @@
         <PxeInterface>192.168.0.8</PxeInterface>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <DebugEnabled>True</DebugEnabled>
+    </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="Cosmos.Build" Version="*" NoWarn="NU1604" />
         <PackageReference Include="Cosmos.Debug.Kernel" Version="*" NoWarn="NU1604" />

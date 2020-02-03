@@ -8,6 +8,15 @@ namespace VerySmallOS
     static class FileSystemUtils
     {
         /// <summary>
+        /// Creates specified file if it doesn't yet exist.
+        /// </summary>
+        /// <param name="path"></param>
+        public static void Touch(string path)
+        {
+            File.Open(path, FileMode.OpenOrCreate).Dispose();
+        }
+
+        /// <summary>
         /// Creates directory if it doesn't exist yet. Takes only absolute paths.
         /// </summary>
         /// <param name="path"></param>
